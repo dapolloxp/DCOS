@@ -1,0 +1,35 @@
+﻿{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "agentEndpointDNSNamePrefix": {
+            "value": "dcapolagent"
+        },
+        "disablePasswordAuthentication": {
+            "value": false
+        },
+        "jumpboxEndpointDNSNamePrefix": {
+            "value": "dapoldcosjump"
+        },
+        "linuxAdminPassword": {
+            "value": "Yankees2010"
+        },
+        "linuxAdminUsername": {
+            "value": "x-admin"
+        },
+        "masterEndpointDNSNamePrefix": {
+            "value": "dcapoldcosmaster"
+        },
+        "windowsAdminPassword": {
+            "value": "Yankees2010"
+        },
+        "windowsAdminUsername": {
+            "value": "x-admin"
+        },
+      "sshRSAPublicKey":
+      {
+        "value": "---- BEGIN SSH2 PUBLIC KEY ----\nAAAAB3NzaC1yc2EAAAABJQAAAQEAjvRMWBvqfmZ5LynZw2jssPYi+ErEwu7IxoNO\naJ8KUyA0iUTTqDu6PAFGJ/+1Jq1WfC5WtywXjhs9FDEDD64tFrkA3PN8sejy4f5/\ntQKPakLNT7trF5/t4IguLOcIhg7JR39oal/ws80ZdTiHPubEBLAiKVAdtVRF4QjH\n4O04yBfmUTSY6U44A2egL1fQEzczB4QuWC8W+IG8/wzYF2rwl2ziH02yjRYcJA0R\nZo3xulf/dkkuZ2GtF0DGTliN2kWZu4XX2bAMWUdSIETPZBZZ6EW4ye6HN1hasYxj\nNTPyPQaMsYdqMdqgbVMoauki0J0Cvv5FrkpmbUlvQWl0BtS+Ww==\n---- END SSH2 PUBLIC KEY ----"
+
+      }
+    }
+}
