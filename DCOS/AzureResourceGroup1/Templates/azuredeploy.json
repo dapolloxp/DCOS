@@ -347,331 +347,394 @@
       }, 
       "type": "string"
     }
-  }, 
-  "variables": {
-    "DcosImageCommit": "92d61c576b3fe0dd1b8b15e7695b55ff7ce254fd", 
-    "TemplateGenerationDate": "2016-04-16 21:32:06.654230", 
-    "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]", 
-    "adminPassword": "[parameters('linuxAdminPassword')]", 
-    "adminUsername": "[parameters('linuxAdminUsername')]", 
-    "agentAddressPrefix": "10.0.0.0/16", 
-    "agentAvailabilitySet": "[concat(variables('orchestratorName'), '-agent-availabilitySet-', variables('nameSuffix'))]", 
-    "agentCustomScript": "[concat('/usr/bin/nohup /bin/bash -c \"/bin/bash /opt/azure/containers/configure-mesos-cluster.sh ',variables('clusterInstallParameters'),' >> /var/log/azure/cluster-bootstrap.log 2>&1 &\" &')]", 
-    "agentEndpointDNSNamePrefix": "[tolower(parameters('agentEndpointDNSNamePrefix'))]", 
-    "agentFirstAddr": 20, 
-    "agentPrivateAddressPrefix": "10.0.10.0/24", 
-    "agentPrivateCount": "[parameters('agentCount')]", 
-    "agentPrivateNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('agentPrivateNSGName'))]", 
-    "agentPrivateNSGName": "[concat(variables('orchestratorName'), '-agent-private-nsg-', variables('nameSuffix'))]", 
-    "agentPrivateSubnetName": "[concat(variables('orchestratorName'), '-agentPrivateSubnet')]", 
-    "agentPrivateVMNamePrefix": "[concat(variables('orchestratorName'), '-agent-private-', variables('nameSuffix'))]", 
-    "agentPrivateVMSSCount": 1, 
-    "agentPublicAddressPrefix": "10.0.15.0/24", 
-    "agentPublicCount": "[variables('agentPublicCountPerMasterCount')[string(variables('masterCount'))]]", 
-    "agentPublicCountPerMasterCount": {
-      "1": 1, 
-      "3": 3, 
+  },
+  "variables":
+  {
+    "DcosImageCommit": "92d61c576b3fe0dd1b8b15e7695b55ff7ce254fd",
+    "TemplateGenerationDate": "2016-04-16 21:32:06.654230",
+    "accountid": "[concat('/subscriptions/',subscription().subscriptionId,'/resourceGroups/',variables('diagnosticsStorageAccountResourceGroup'),'/providers/','Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
+    "adminPassword": "[parameters('linuxAdminPassword')]",
+    "adminUsername": "[parameters('linuxAdminUsername')]",
+    "agentAddressPrefix": "10.0.0.0/16",
+    "agentAvailabilitySet": "[concat(variables('orchestratorName'), '-agent-availabilitySet-', variables('nameSuffix'))]",
+    "agentCustomScript": "[concat('/usr/bin/nohup /bin/bash -c \"/bin/bash /opt/azure/containers/configure-mesos-cluster.sh ',variables('clusterInstallParameters'),' >> /var/log/azure/cluster-bootstrap.log 2>&1 &\" &')]",
+    "agentEndpointDNSNamePrefix": "[tolower(parameters('agentEndpointDNSNamePrefix'))]",
+    "agentFirstAddr": 20,
+    "agentPrivateAddressPrefix": "10.0.10.0/24",
+    "agentPrivateCount": "[parameters('agentCount')]",
+    "agentPrivateNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('agentPrivateNSGName'))]",
+    "agentPrivateNSGName": "[concat(variables('orchestratorName'), '-agent-private-nsg-', variables('nameSuffix'))]",
+    "agentPrivateSubnetName": "[concat(variables('orchestratorName'), '-agentPrivateSubnet')]",
+    "agentPrivateVMNamePrefix": "[concat(variables('orchestratorName'), '-agent-private-', variables('nameSuffix'))]",
+    "agentPrivateVMSSCount": 1,
+    "agentPublicAddressPrefix": "10.0.15.0/24",
+    "agentPublicCount": "[variables('agentPublicCountPerMasterCount')[string(variables('masterCount'))]]",
+    "agentPublicCountPerMasterCount":
+    {
+      "1": 1,
+      "3": 3,
       "5": 3
-    }, 
-    "agentPublicIPAddressName": "[concat(variables('orchestratorName'), '-agent-ip-', variables('agentEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]", 
-    "agentPublicNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('agentPublicNSGName'))]", 
-    "agentPublicNSGName": "[concat(variables('orchestratorName'), '-agent-public-nsg-', variables('nameSuffix'))]", 
-    "agentPublicSubnetName": "[concat(variables('orchestratorName'), '-agentPublicSubnet')]", 
-    "agentPublicVMNamePrefix": "[concat(variables('orchestratorName'), '-agent-public-', variables('nameSuffix'))]", 
-    "agentPublicVMSSCount": 1, 
-    "agentStorageAccountsCount": 5, 
-    "agentStoragePrivateAccountName": "[concat(variables('storageAccountBaseName'), 'agntpri')]", 
-    "agentStoragePublicAccountName": "[concat(variables('storageAccountBaseName'), 'agntpub')]", 
-    "agentVMSize": "[parameters('agentVMSize')]", 
-    "agentsPerIPv4Octet": 200, 
-    "agentsPublicLbBackendPoolName": "[concat(variables('orchestratorName'), '-agent-pool-', variables('nameSuffix'))]", 
-    "agentsPublicLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('agentsPublicLbName'))]", 
-    "agentsPublicLbIPConfigID": "[concat(variables('agentsPublicLbID'),'/frontendIPConfigurations/', variables('agentsPublicLbIPConfigName'))]", 
-    "agentsPublicLbIPConfigName": "[concat(variables('orchestratorName'), '-agent-lbFrontEnd-', variables('nameSuffix'))]", 
-    "agentsPublicLbName": "[concat(variables('orchestratorName'), '-agent-lb-', variables('nameSuffix'))]", 
-    "apiVersionDefault": "2016-03-30", 
-    "apiVersionStorage": "2015-06-15", 
-    "chronosEnabled": true, 
-    "clusterInstallParameters": "[concat(variables('masterCount'), ' ',variables('masterVMNamePrefix'), ' ',variables('masterFirstAddr'), ' ',variables('swarmEnabled'),' ',variables('marathonEnabled'),' ',variables('chronosEnabled'),' ',variables('omsStorageAccount'),' ',variables('omsStorageAccountKey'),' ', variables('adminUsername'),' ',variables('postInstallScriptURI'))]", 
-    "deployEnvironment": "acs", 
-    "diagnosticsStorageAccountName": "[concat(variables('storageAccountBaseName'), 'diag', '0')]", 
-    "diagnosticsStorageAccountName-false": "", 
-    "diagnosticsStorageAccountName-true": "[variables('diagnosticsStorageAccountName')]", 
-    "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]", 
-    "disablePasswordAuthentication": "[parameters('disablePasswordAuthentication')]", 
-    "enableNewStorageAccountNaming": "[parameters('enableNewStorageAccountNaming')]", 
-    "enableVMDiagnostics": "[parameters('enableVMDiagnostics')]", 
-    "isValidation": "[parameters('isValidation')]", 
-    "linuxConfiguration": "[variables('linuxConfigurations')[variables('setLinuxConfigurationForVMCreate')]]", 
-    "linuxConfigurations": [
-      {}, 
+    },
+    "agentPublicIPAddressName": "[concat(variables('orchestratorName'), '-agent-ip-', variables('agentEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]",
+    "agentPublicNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('agentPublicNSGName'))]",
+    "agentPublicNSGName": "[concat(variables('orchestratorName'), '-agent-public-nsg-', variables('nameSuffix'))]",
+    "agentPublicSubnetName": "[concat(variables('orchestratorName'), '-agentPublicSubnet')]",
+    "agentPublicVMNamePrefix": "[concat(variables('orchestratorName'), '-agent-public-', variables('nameSuffix'))]",
+    "agentPublicVMSSCount": 1,
+    "agentStorageAccountsCount": 5,
+    "agentStoragePrivateAccountName": "[concat(variables('storageAccountBaseName'), 'agntpri')]",
+    "agentStoragePublicAccountName": "[concat(variables('storageAccountBaseName'), 'agntpub')]",
+    "agentVMSize": "[parameters('agentVMSize')]",
+    "agentsPerIPv4Octet": 200,
+    "agentsPublicLbBackendPoolName": "[concat(variables('orchestratorName'), '-agent-pool-', variables('nameSuffix'))]",
+    "agentsPublicLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('agentsPublicLbName'))]",
+    "agentsPublicLbIPConfigID": "[concat(variables('agentsPublicLbID'),'/frontendIPConfigurations/', variables('agentsPublicLbIPConfigName'))]",
+    "agentsPublicLbIPConfigName": "[concat(variables('orchestratorName'), '-agent-lbFrontEnd-', variables('nameSuffix'))]",
+    "agentsPublicLbName": "[concat(variables('orchestratorName'), '-agent-lb-', variables('nameSuffix'))]",
+    "apiVersionDefault": "2016-03-30",
+    "apiVersionStorage": "2015-06-15",
+    "chronosEnabled": true,
+    "clusterInstallParameters": "[concat(variables('masterCount'), ' ',variables('masterVMNamePrefix'), ' ',variables('masterFirstAddr'), ' ',variables('swarmEnabled'),' ',variables('marathonEnabled'),' ',variables('chronosEnabled'),' ',variables('omsStorageAccount'),' ',variables('omsStorageAccountKey'),' ', variables('adminUsername'),' ',variables('postInstallScriptURI'))]",
+    "deployEnvironment": "acs",
+    "diagnosticsStorageAccountName": "[concat(variables('storageAccountBaseName'), 'diag', '0')]",
+    "diagnosticsStorageAccountName-false": "",
+    "diagnosticsStorageAccountName-true": "[variables('diagnosticsStorageAccountName')]",
+    "diagnosticsStorageAccountResourceGroup": "[resourceGroup().name]",
+    "disablePasswordAuthentication": "[parameters('disablePasswordAuthentication')]",
+    "enableNewStorageAccountNaming": "[parameters('enableNewStorageAccountNaming')]",
+    "enableVMDiagnostics": "[parameters('enableVMDiagnostics')]",
+    "isValidation": "[parameters('isValidation')]",
+    "linuxConfiguration": "[variables('linuxConfigurations')[variables('setLinuxConfigurationForVMCreate')]]",
+    "linuxConfigurations":
+    [
       {
-        "disablePasswordAuthentication": "[variables('disablePasswordAuthentication')]", 
-        "ssh": {
-          "publicKeys": [
+      },
+      {
+        "disablePasswordAuthentication": "[variables('disablePasswordAuthentication')]",
+        "ssh":
+        {
+          "publicKeys":
+          [
             {
-              "keyData": "[variables('sshRSAPublicKey')]", 
+              "keyData": "[variables('sshRSAPublicKey')]",
               "path": "[variables('sshKeyPath')]"
             }
           ]
         }
       }
-    ], 
-    "linuxOffer": "[parameters('linuxOffer')]", 
-    "linuxPublisher": "[parameters('linuxPublisher')]", 
-    "linuxSku": "[parameters('linuxSku')]", 
-    "linuxVersion": "[parameters('linuxVersion')]", 
-    "marathonEnabled": true, 
-    "masterAddressPrefix": "192.168.25.0/24", 
-    "masterAvailabilitySet": "[concat(variables('orchestratorName'), '-master-availabilitySet-', variables('nameSuffix'))]", 
-    "masterCount": 3, 
-    "masterCustomScript": "[concat('/bin/bash -c \"/bin/bash /opt/azure/containers/configure-mesos-cluster.sh ',variables('clusterInstallParameters'),' >> /var/log/azure/cluster-bootstrap.log 2>&1\"')]", 
-    "masterEndpointDNSNamePrefix": "[tolower(parameters('masterEndpointDNSNamePrefix'))]", 
-    "masterFirstAddr": 5, 
-    "masterLbBackendPoolName": "[concat(variables('orchestratorName'), '-master-pool-', variables('nameSuffix'))]", 
-    "masterLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('masterLbName'))]", 
-    "masterLbIPConfigID": "[concat(variables('masterLbID'),'/frontendIPConfigurations/', variables('masterLbIPConfigName'))]", 
-    "masterLbIPConfigName": "[concat(variables('orchestratorName'), '-master-lbFrontEnd-', variables('nameSuffix'))]", 
-    "masterLbName": "[concat(variables('orchestratorName'), '-master-lb-', variables('nameSuffix'))]", 
-    "masterNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('masterNSGName'))]", 
-    "masterNSGName": "[concat(variables('orchestratorName'), '-master-nsg-', variables('nameSuffix'))]", 
-    "masterPublicIPAddressName": "[concat(variables('orchestratorName'), '-master-ip-', variables('masterEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]", 
-    "masterSizes": [
-      "Standard_D2", 
+    ],
+    "linuxOffer": "[parameters('linuxOffer')]",
+    "linuxPublisher": "[parameters('linuxPublisher')]",
+    "linuxSku": "[parameters('linuxSku')]",
+    "linuxVersion": "[parameters('linuxVersion')]",
+    "marathonEnabled": true,
+    "masterAddressPrefix": "192.168.90.0/24",
+    "masterAvailabilitySet": "[concat(variables('orchestratorName'), '-master-availabilitySet-', variables('nameSuffix'))]",
+    "masterCount": 3,
+    "masterCustomScript": "[concat('/bin/bash -c \"/bin/bash /opt/azure/containers/configure-mesos-cluster.sh ',variables('clusterInstallParameters'),' >> /var/log/azure/cluster-bootstrap.log 2>&1\"')]",
+    "masterEndpointDNSNamePrefix": "[tolower(parameters('masterEndpointDNSNamePrefix'))]",
+    "masterFirstAddr": 5,
+    "masterLbBackendPoolName": "[concat(variables('orchestratorName'), '-master-pool-', variables('nameSuffix'))]",
+    "masterLbID": "[resourceId('Microsoft.Network/loadBalancers',variables('masterLbName'))]",
+    "masterLbIPConfigID": "[concat(variables('masterLbID'),'/frontendIPConfigurations/', variables('masterLbIPConfigName'))]",
+    "masterLbIPConfigName": "[concat(variables('orchestratorName'), '-master-lbFrontEnd-', variables('nameSuffix'))]",
+    "masterLbName": "[concat(variables('orchestratorName'), '-master-lb-', variables('nameSuffix'))]",
+    "masterNSGID": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('masterNSGName'))]",
+    "masterNSGName": "[concat(variables('orchestratorName'), '-master-nsg-', variables('nameSuffix'))]",
+    "masterPublicIPAddressName": "[concat(variables('orchestratorName'), '-master-ip-', variables('masterEndpointDNSNamePrefix'), '-', variables('nameSuffix'))]",
+    "masterSizes":
+    [
+      "Standard_D2",
       "Standard_A1"
-    ], 
-    "masterStorageAccountName": "[concat(variables('storageAccountBaseName'), 'mstr0')]", 
-    "masterSubnetName": "[concat(variables('orchestratorName'), '-masterSubnet')]", 
-    "masterSubnetRef": "[concat(variables('vnetID'),'/subnets/',variables('masterSubnetName'))]", 
-    "masterVMNamePrefix": "[concat(variables('orchestratorName'), '-master-', variables('nameSuffix'), '-')]", 
-    "masterVMNic": [
-      "[concat(variables('masterVMNamePrefix'), 'nic-0')]", 
-      "[concat(variables('masterVMNamePrefix'), 'nic-1')]", 
-      "[concat(variables('masterVMNamePrefix'), 'nic-2')]", 
-      "[concat(variables('masterVMNamePrefix'), 'nic-3')]", 
-      "[concat(variables('masterVMNamePrefix'), 'nic-4')]", 
-      "[concat(variables('masterVMNamePrefix'), 'nic-5')]", 
+    ],
+    "masterStorageAccountName": "[concat(variables('storageAccountBaseName'), 'mstr0')]",
+    //"masterSubnetName": "[concat(variables('orchestratorName'), '-masterSubnet')]",
+    "masterSubnetName" :  "master",
+    "masterVNETRG": "VMSS-ILB-Linux",
+    "virtualNetworkName": "AzureUSNCVNet2",
+    "mastervnetID": "[resourceId(variables('masterVNETRG'),'Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "masterSubnetRef": "[concat(variables('vnetID'),'/subnets/',variables('masterSubnetName'))]",
+    "masterVMNamePrefix": "[concat(variables('orchestratorName'), '-master-', variables('nameSuffix'), '-')]",
+    "masterVMNic":
+    [
+      "[concat(variables('masterVMNamePrefix'), 'nic-0')]",
+      "[concat(variables('masterVMNamePrefix'), 'nic-1')]",
+      "[concat(variables('masterVMNamePrefix'), 'nic-2')]",
+      "[concat(variables('masterVMNamePrefix'), 'nic-3')]",
+      "[concat(variables('masterVMNamePrefix'), 'nic-4')]",
+      "[concat(variables('masterVMNamePrefix'), 'nic-5')]",
       "[concat(variables('masterVMNamePrefix'), 'nic-6')]"
-    ], 
-    "masterVMSize": "[variables('masterSizes')[variables('isValidation')]]", 
-    "nameSuffix": "[parameters('nameSuffix')]", 
-    "oauthEnabled": "false", 
-    "omsStorageAccount": "none", 
-    "omsStorageAccountKey": "none", 
-    "orchestratorName": "dcos", 
-    "osImageOffer": "[variables('linuxOffer')]", 
-    "osImagePublisher": "[variables('linuxPublisher')]", 
-    "osImageSKU": "[variables('linuxSku')]", 
-    "osImageVersion": "[variables('linuxVersion')]", 
-    "postInstallScriptURI": "[parameters('postInstallScriptURI')]", 
-    "setBrowserFirstTabDefaultPrefix": "powershell.exe -ExecutionPolicy Unrestricted -command \"New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer' ; New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\BrowserEmulation' ; New-ItemProperty -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\BrowserEmulation' -Name IntranetCompatibilityMode -Value 0 -Type DWord; New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\Main' ; New-ItemProperty -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\Main' -Name 'Start Page' -Type String -Value http://\"", 
-    "setBrowserFirstTabDefaultSuffix": "0:5050", 
-    "setLinuxConfigurationForVMCreate": "[parameters('setLinuxConfigurationForVMCreate')]", 
-    "sshKeyPath": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]", 
-    "sshRSAPublicKey": "[parameters('sshRSAPublicKey')]", 
-    "storageAccountBaseName": "[uniqueString(concat(variables('masterEndpointDNSNamePrefix'),variables(concat('storageAccountBaseNameNewSuffix', '-', variables('enableNewStorageAccountNaming'))), variables('orchestratorName')))]", 
-    "storageAccountBaseNameNewSuffix-false": "", 
-    "storageAccountBaseNameNewSuffix-true": "[resourceGroup().location]", 
-    "storageAccountPrefixes": [
-      "0", 
-      "6", 
-      "c", 
-      "i", 
-      "o", 
-      "u", 
-      "1", 
-      "7", 
-      "d", 
-      "j", 
-      "p", 
-      "v", 
-      "2", 
-      "8", 
-      "e", 
-      "k", 
-      "q", 
-      "w", 
-      "3", 
-      "9", 
-      "f", 
-      "l", 
-      "r", 
-      "x", 
-      "4", 
-      "a", 
-      "g", 
-      "m", 
-      "s", 
-      "y", 
-      "5", 
-      "b", 
-      "h", 
-      "n", 
-      "t", 
+    ],
+    "masterVMSize": "[variables('masterSizes')[variables('isValidation')]]",
+    "nameSuffix": "[parameters('nameSuffix')]",
+    "oauthEnabled": "false",
+    "omsStorageAccount": "none",
+    "omsStorageAccountKey": "none",
+    "orchestratorName": "dcos",
+    "osImageOffer": "[variables('linuxOffer')]",
+    "osImagePublisher": "[variables('linuxPublisher')]",
+    "osImageSKU": "[variables('linuxSku')]",
+    "osImageVersion": "[variables('linuxVersion')]",
+    "postInstallScriptURI": "[parameters('postInstallScriptURI')]",
+    "setBrowserFirstTabDefaultPrefix": "powershell.exe -ExecutionPolicy Unrestricted -command \"New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer' ; New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\BrowserEmulation' ; New-ItemProperty -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\BrowserEmulation' -Name IntranetCompatibilityMode -Value 0 -Type DWord; New-Item -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\Main' ; New-ItemProperty -Path HKLM:'\\SOFTWARE\\Policies\\Microsoft\\Internet Explorer\\Main' -Name 'Start Page' -Type String -Value http://",
+    "setBrowserFirstTabDefaultSuffix": "0:5050",
+    "setLinuxConfigurationForVMCreate": "[parameters('setLinuxConfigurationForVMCreate')]",
+    "sshKeyPath": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]",
+    "sshRSAPublicKey": "[parameters('sshRSAPublicKey')]",
+    "storageAccountBaseName": "[uniqueString(concat(variables('masterEndpointDNSNamePrefix'),variables(concat('storageAccountBaseNameNewSuffix', '-', variables('enableNewStorageAccountNaming'))), variables('orchestratorName')))]",
+    "storageAccountBaseNameNewSuffix-false": "",
+    "storageAccountBaseNameNewSuffix-true": "[resourceGroup().location]",
+    "storageAccountPrefixes":
+    [
+      "0",
+      "6",
+      "c",
+      "i",
+      "o",
+      "u",
+      "1",
+      "7",
+      "d",
+      "j",
+      "p",
+      "v",
+      "2",
+      "8",
+      "e",
+      "k",
+      "q",
+      "w",
+      "3",
+      "9",
+      "f",
+      "l",
+      "r",
+      "x",
+      "4",
+      "a",
+      "g",
+      "m",
+      "s",
+      "y",
+      "5",
+      "b",
+      "h",
+      "n",
+      "t",
       "z"
-    ], 
-    "storageAccountPrefixesCount": "[length(variables('storageAccountPrefixes'))]", 
-    "storageAccountType": "Standard_LRS", 
-    "storageLocation": "[variables('storageLocations')[variables('isValidation')]]", 
-    "storageLocations": [
-      "[resourceGroup().location]", 
+    ],
+    "storageAccountPrefixesCount": "[length(variables('storageAccountPrefixes'))]",
+    "storageAccountType": "Standard_LRS",
+    "storageLocation": "[variables('storageLocations')[variables('isValidation')]]",
+    "storageLocations":
+    [
+      "[resourceGroup().location]",
       "East US 2 (Stage)"
-    ], 
-    "swarmEnabled": false, 
-    "virtualNetworkName": "[concat(variables('orchestratorName'), '-vnet-', variables('nameSuffix'))]", 
-    "vmSizesMap": {
-      "Standard_A0": {
+    ],
+    "swarmEnabled": false,
+    //"virtualNetworkName": "[concat(variables('orchestratorName'), '-vnet-', variables('nameSuffix'))]",
+    "vmSizesMap":
+    {
+      "Standard_A0":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A1": {
+      },
+      "Standard_A1":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A10": {
+      },
+      "Standard_A10":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A11": {
+      },
+      "Standard_A11":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A2": {
+      },
+      "Standard_A2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A3": {
+      },
+      "Standard_A3":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A4": {
+      },
+      "Standard_A4":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A5": {
+      },
+      "Standard_A5":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A6": {
+      },
+      "Standard_A6":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A7": {
+      },
+      "Standard_A7":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A8": {
+      },
+      "Standard_A8":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_A9": {
+      },
+      "Standard_A9":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D1": {
+      },
+      "Standard_D1":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D11": {
+      },
+      "Standard_D11":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D11_v2": {
+      },
+      "Standard_D11_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D12": {
+      },
+      "Standard_D12":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D12_v2": {
+      },
+      "Standard_D12_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D13": {
+      },
+      "Standard_D13":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D13_v2": {
+      },
+      "Standard_D13_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D14": {
+      },
+      "Standard_D14":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D14_v2": {
+      },
+      "Standard_D14_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D1_v2": {
+      },
+      "Standard_D1_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D2": {
+      },
+      "Standard_D2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D2_v2": {
+      },
+      "Standard_D2_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D3": {
+      },
+      "Standard_D3":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D3_v2": {
+      },
+      "Standard_D3_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D4": {
+      },
+      "Standard_D4":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D4_v2": {
+      },
+      "Standard_D4_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_D5_v2": {
+      },
+      "Standard_D5_v2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_DS1": {
+      },
+      "Standard_DS1":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS11": {
+      },
+      "Standard_DS11":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS12": {
+      },
+      "Standard_DS12":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS13": {
+      },
+      "Standard_DS13":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS14": {
+      },
+      "Standard_DS14":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS2": {
+      },
+      "Standard_DS2":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS3": {
+      },
+      "Standard_DS3":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_DS4": {
+      },
+      "Standard_DS4":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_G1": {
+      },
+      "Standard_G1":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_G2": {
+      },
+      "Standard_G2":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_G3": {
+      },
+      "Standard_G3":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_G4": {
+      },
+      "Standard_G4":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_G5": {
+      },
+      "Standard_G5":
+      {
         "storageAccountType": "Standard_LRS"
-      }, 
-      "Standard_GS1": {
+      },
+      "Standard_GS1":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_GS2": {
+      },
+      "Standard_GS2":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_GS3": {
+      },
+      "Standard_GS3":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_GS4": {
+      },
+      "Standard_GS4":
+      {
         "storageAccountType": "Premium_LRS"
-      }, 
-      "Standard_GS5": {
+      },
+      "Standard_GS5":
+      {
         "storageAccountType": "Premium_LRS"
       }
-    }, 
-    "vmsPerStorageAccount": "[parameters('vmsPerStorageAccount')]", 
-    "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]", 
-    "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]", 
-    "wadcfgxstart": "[concat(variables('wadlogs'),variables(concat('wadperfcounters1','-',variables('enableVMDiagnostics'))),variables(concat('wadperfcounters2','-',variables('enableVMDiagnostics'))),'<Metrics resourceId=\"')]", 
-    "wadlogs": "<WadCfg><DiagnosticMonitorConfiguration>", 
-    "wadperfcounters1-false": "", 
-    "wadperfcounters1-true": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\AvailableMemory\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentAvailableMemory\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Mem. percent available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\UsedMemory\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory used\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentUsedMemory\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory percentage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentUsedByCache\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Mem. used by cache\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentIdleTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU idle time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentUserTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentProcessorTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU percentage guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentIOWaitTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU IO wait time\" locale=\"en-us\"/></PerformanceCounterConfiguration>", 
-    "wadperfcounters2-false": "", 
-    "wadperfcounters2-true": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\BytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk total bytes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WriteBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\TransfersPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk transfers\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadsPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk reads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WritesPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk writes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageReadTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageWriteTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageTransferTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk transfer time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageDiskQueueLength\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Disk queue length\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>", 
-    "windowsAdminPassword": "[parameters('windowsAdminPassword')]", 
+    },
+    "vmsPerStorageAccount": "[parameters('vmsPerStorageAccount')]",
+    //   "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "vnetID": "[resourceId(variables('masterVNETRG'),'Microsoft.Network/virtualNetworks',variables('virtualNetworkName'))]",
+    "wadcfgxend": "[concat('\"><MetricAggregation scheduledTransferPeriod=\"PT1H\"/><MetricAggregation scheduledTransferPeriod=\"PT1M\"/></Metrics></DiagnosticMonitorConfiguration></WadCfg>')]",
+    "wadcfgxstart": "[concat(variables('wadlogs'),variables(concat('wadperfcounters1','-',variables('enableVMDiagnostics'))),variables(concat('wadperfcounters2','-',variables('enableVMDiagnostics'))),'<Metrics resourceId=\"')]",
+    "wadlogs": "<WadCfg><DiagnosticMonitorConfiguration>",
+    "wadperfcounters1-false": "",
+    "wadperfcounters1-true": "<PerformanceCounters scheduledTransferPeriod=\"PT1M\"><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\AvailableMemory\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentAvailableMemory\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Mem. percent available\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\UsedMemory\" sampleRate=\"PT15S\" unit=\"Bytes\"><annotation displayName=\"Memory used\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentUsedMemory\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Memory percentage\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Memory\\PercentUsedByCache\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"Mem. used by cache\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentIdleTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU idle time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentUserTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU user time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentProcessorTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU percentage guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\Processor\\PercentIOWaitTime\" sampleRate=\"PT15S\" unit=\"Percent\"><annotation displayName=\"CPU IO wait time\" locale=\"en-us\"/></PerformanceCounterConfiguration>",
+    "wadperfcounters2-false": "",
+    "wadperfcounters2-true": "<PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\BytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk total bytes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk read guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WriteBytesPerSecond\" sampleRate=\"PT15S\" unit=\"BytesPerSecond\"><annotation displayName=\"Disk write guest OS\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\TransfersPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk transfers\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\ReadsPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk reads\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\WritesPerSecond\" sampleRate=\"PT15S\" unit=\"CountPerSecond\"><annotation displayName=\"Disk writes\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageReadTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk read time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageWriteTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk write time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageTransferTime\" sampleRate=\"PT15S\" unit=\"Seconds\"><annotation displayName=\"Disk transfer time\" locale=\"en-us\"/></PerformanceCounterConfiguration><PerformanceCounterConfiguration counterSpecifier=\"\\PhysicalDisk\\AverageDiskQueueLength\" sampleRate=\"PT15S\" unit=\"Count\"><annotation displayName=\"Disk queue length\" locale=\"en-us\"/></PerformanceCounterConfiguration></PerformanceCounters>",
+    "windowsAdminPassword": "[parameters('windowsAdminPassword')]",
     "windowsAdminUsername": "[parameters('windowsAdminUsername')]"
   }, 
   "resources": [
@@ -701,50 +764,6 @@
     }, 
     {
       "apiVersion": "[variables('apiVersionDefault')]", 
-      "dependsOn": [
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('agentPublicNSGName'))]", 
-        "[concat('Microsoft.Network/networkSecurityGroups/', variables('agentPrivateNSGName'))]"
-      ], 
-      "location": "[resourceGroup().location]", 
-      "name": "[variables('virtualNetworkName')]", 
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('masterAddressPrefix')]", 
-            "[variables('agentAddressPrefix')]"
-          ]
-        }, 
-        "subnets": [
-          {
-            "name": "[variables('masterSubnetName')]", 
-            "properties": {
-              "addressPrefix": "[variables('masterAddressPrefix')]"
-            }
-          }, 
-          {
-            "name": "[variables('agentPublicSubnetName')]", 
-            "properties": {
-              "addressPrefix": "[variables('agentPublicAddressPrefix')]", 
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agentPublicNSGName'))]"
-              }
-            }
-          }, 
-          {
-            "name": "[variables('agentPrivateSubnetName')]", 
-            "properties": {
-              "addressPrefix": "[variables('agentPrivateAddressPrefix')]", 
-              "networkSecurityGroup": {
-                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('agentPrivateNSGName'))]"
-              }
-            }
-          }
-        ]
-      }, 
-      "type": "Microsoft.Network/virtualNetworks"
-    }, 
-    {
-      "apiVersion": "[variables('apiVersionDefault')]", 
       "location": "[resourceGroup().location]", 
       "name": "[variables('masterAvailabilitySet')]", 
       "properties": {}, 
@@ -768,20 +787,30 @@
         "[concat('Microsoft.Network/publicIPAddresses/', variables('masterPublicIPAddressName'))]"
       ], 
       "location": "[resourceGroup().location]", 
-      "name": "[variables('masterLbName')]", 
-      "properties": {
-        "backendAddressPools": [
+      "name": "[variables('masterLbName')]",
+      "properties":      
+      {
+        "backendAddressPools":
+        [
           {
             "name": "[variables('masterLbBackendPoolName')]"
           }
-        ], 
-        "frontendIPConfigurations": [
+        ],
+        "frontendIPConfigurations":
+        [
           {
-            "name": "[variables('masterLbIPConfigName')]", 
-            "properties": {
-              "publicIPAddress": {
+            "name": "[variables('masterLbIPConfigName')]",
+            "properties":
+            {
+              "publicIPAddress":
+              {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('masterPublicIPAddressName'))]"
               }
+              //"privateIPAllocationMethod": "Dynamic",
+              /*"subnet":
+              {
+                "id": "[variables('masterSubnetRef')]"
+              }*/
             }
           }
         ]
@@ -813,82 +842,110 @@
     {
       "apiVersion": "[variables('apiVersionDefault')]", 
       "location": "[resourceGroup().location]", 
-      "name": "[variables('masterNSGName')]", 
-      "properties": {
-        "securityRules": [
+      "name": "[variables('masterNSGName')]",
+      "properties":
+      {
+        "securityRules":
+        [
           {
-            "name": "ssh", 
-            "properties": {
-              "access": "Allow", 
-              "description": "Allow SSH", 
-              "destinationAddressPrefix": "*", 
-              "destinationPortRange": "22", 
-              "direction": "Inbound", 
-              "priority": 200, 
-              "protocol": "Tcp", 
-              "sourceAddressPrefix": "*", 
+            "name": "ssh",
+            "properties":
+            {
+              "access": "Allow",
+              "description": "Allow SSH",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "22",
+              "direction": "Inbound",
+              "priority": 200,
+              "protocol": "Tcp",
+              "sourceAddressPrefix": "*",
               "sourcePortRange": "*"
             }
           }
-        ]
+        ]/*,
+        "subnets":
+        [
+          {
+            //"id": "[variables('masterSubnetRef')]"
+            "id" : "/subscriptions/90376dc6-e4a0-49c3-930d-38ee8e2bafa4/resourceGroups/VMSS-ILB-Linux/providers/Microsoft.Network/virtualNetworks/AzureUSNCVNet2/subnets/master"  
+          }
+        ]*/
       }, 
       "type": "Microsoft.Network/networkSecurityGroups"
-    }, 
+    },
     {
-      "apiVersion": "[variables('apiVersionDefault')]", 
-      "location": "[resourceGroup().location]", 
-      "name": "[variables('agentPrivateNSGName')]", 
-      "type": "Microsoft.Network/networkSecurityGroups"
+      "apiVersion": "[variables('apiVersionDefault')]",
+      "location": "[resourceGroup().location]",
+      "name": "[variables('agentPrivateNSGName')]",
+      "type": "Microsoft.Network/networkSecurityGroups"/*,
+      "subnets":
+      [
+        {
+          //"id": "[variables('masterSubnetRef')]"
+          "id": "/subscriptions/90376dc6-e4a0-49c3-930d-38ee8e2bafa4/resourceGroups/VMSS-ILB-Linux/providers/Microsoft.Network/virtualNetworks/AzureUSNCVNet2/subnets/master"
+        }
+      ]*/
     }, 
     {
       "apiVersion": "[variables('apiVersionDefault')]", 
       "location": "[resourceGroup().location]", 
       "name": "[variables('agentPublicNSGName')]", 
       "properties": {
-        "securityRules": [
+        "securityRules":
+        [
           {
-            "name": "Allow_HTTP", 
-            "properties": {
-              "access": "Allow", 
-              "description": "Allow HTTP traffic from the Internet to Public Agents", 
-              "destinationAddressPrefix": "*", 
-              "destinationPortRange": "80", 
-              "direction": "Inbound", 
-              "priority": 200, 
-              "protocol": "*", 
-              "sourceAddressPrefix": "Internet", 
+            "name": "Allow_HTTP",
+            "properties":
+            {
+              "access": "Allow",
+              "description": "Allow HTTP traffic from the Internet to Public Agents",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "80",
+              "direction": "Inbound",
+              "priority": 200,
+              "protocol": "*",
+              "sourceAddressPrefix": "Internet",
               "sourcePortRange": "*"
             }
-          }, 
+          },
           {
-            "name": "Allow_HTTPS", 
-            "properties": {
-              "access": "Allow", 
-              "description": "Allow HTTPS traffic from the Internet to Public Agents", 
-              "destinationAddressPrefix": "*", 
-              "destinationPortRange": "443", 
-              "direction": "Inbound", 
-              "priority": 300, 
-              "protocol": "*", 
-              "sourceAddressPrefix": "Internet", 
+            "name": "Allow_HTTPS",
+            "properties":
+            {
+              "access": "Allow",
+              "description": "Allow HTTPS traffic from the Internet to Public Agents",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "443",
+              "direction": "Inbound",
+              "priority": 300,
+              "protocol": "*",
+              "sourceAddressPrefix": "Internet",
               "sourcePortRange": "*"
             }
-          }, 
+          },
           {
-            "name": "Allow_8080", 
-            "properties": {
-              "access": "Allow", 
-              "description": "Allow 8080 traffic from the Internet to Public Agents", 
-              "destinationAddressPrefix": "*", 
-              "destinationPortRange": "8080", 
-              "direction": "Inbound", 
-              "priority": 400, 
-              "protocol": "*", 
-              "sourceAddressPrefix": "Internet", 
+            "name": "Allow_8080",
+            "properties":
+            {
+              "access": "Allow",
+              "description": "Allow 8080 traffic from the Internet to Public Agents",
+              "destinationAddressPrefix": "*",
+              "destinationPortRange": "8080",
+              "direction": "Inbound",
+              "priority": 400,
+              "protocol": "*",
+              "sourceAddressPrefix": "Internet",
               "sourcePortRange": "*"
             }
           }
-        ]
+        ]/*,
+        "subnets":
+        [
+          {
+            //"id": "[variables('masterSubnetRef')]"
+            "id": "/subscriptions/90376dc6-e4a0-49c3-930d-38ee8e2bafa4/resourceGroups/VMSS-ILB-Linux/providers/Microsoft.Network/virtualNetworks/AzureUSNCVNet2/subnets/master"
+          }
+        ]*/
       }, 
       "type": "Microsoft.Network/networkSecurityGroups"
     }, 
@@ -900,7 +957,7 @@
       }, 
       "dependsOn": [
         "[variables('masterLbID')]", 
-        "[variables('vnetID')]", 
+        //"[variables('vnetID')]", 
         "[concat(variables('masterLbID'),'/inboundNatRules/SSH-',variables('masterVMNamePrefix'),copyIndex())]", 
         "[variables('masterNSGID')]"
       ], 
@@ -1065,25 +1122,36 @@
       "type": "Microsoft.Network/publicIPAddresses"
     }, 
     {
-      "apiVersion": "[variables('apiVersionDefault')]", 
-      "dependsOn": [
+      "apiVersion": "[variables('apiVersionDefault')]",
+      "dependsOn":      
+      [
         "[concat('Microsoft.Network/publicIPAddresses/', variables('agentPublicIPAddressName'))]"
       ], 
       "location": "[resourceGroup().location]", 
       "name": "[variables('agentsPublicLbName')]", 
       "properties": {
-        "backendAddressPools": [
+        "backendAddressPools":        
+        [
           {
             "name": "[variables('agentsPublicLbBackendPoolName')]"
           }
-        ], 
-        "frontendIPConfigurations": [
+        ],
+        "frontendIPConfigurations":        
+        [
           {
-            "name": "[variables('agentsPublicLbIPConfigName')]", 
-            "properties": {
-              "publicIPAddress": {
+            "name": "[variables('agentsPublicLbIPConfigName')]",
+            "properties":
+            {
+
+              "publicIPAddress":
+              {
                 "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('agentPublicIPAddressName'))]"
               }
+              //"privateIPAllocationMethod": "Dynamic",
+              /*"subnet":
+              {
+                "id": "[variables('masterSubnetRef')]"
+              }*/
             }
           }
         ], 
@@ -1189,8 +1257,7 @@
         "name": "masterLbLoopNode"
       }, 
       "dependsOn": [
-        "[concat('Microsoft.Storage/storageAccounts/', variables('agentStoragePublicAccountName'))]", 
-        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]", 
+        "[concat('Microsoft.Storage/storageAccounts/', variables('agentStoragePublicAccountName'))]",
         "[concat('Microsoft.Network/loadBalancers/', variables('agentsPublicLbName'))]", 
         "[variables('diagnosticsStorageAccountName')]"
       ], 
@@ -1241,9 +1308,11 @@
                           {
                             "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/loadBalancers/', variables('agentsPublicLbName'), '/backendAddressPools/',variables('agentsPublicLbBackendPoolName'))]"
                           }
-                        ], 
-                        "subnet": {
-                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('agentPublicSubnetName'))]"
+                        ],
+                        "subnet":
+                        {
+                          //"id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('agentPublicSubnetName'))]"
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', variables('masterVNETRG'), '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('masterSubnetName'))]"
                         }
                       }
                     }
@@ -1322,7 +1391,6 @@
         "[concat('Microsoft.Storage/storageAccounts/',variables('storageAccountPrefixes')[mod(2,variables('storageAccountPrefixesCount'))],variables('storageAccountPrefixes')[div(2,variables('storageAccountPrefixesCount'))],variables('agentStoragePrivateAccountName'),2)]", 
         "[concat('Microsoft.Storage/storageAccounts/',variables('storageAccountPrefixes')[mod(3,variables('storageAccountPrefixesCount'))],variables('storageAccountPrefixes')[div(3,variables('storageAccountPrefixesCount'))],variables('agentStoragePrivateAccountName'),3)]", 
         "[concat('Microsoft.Storage/storageAccounts/',variables('storageAccountPrefixes')[mod(4,variables('storageAccountPrefixesCount'))],variables('storageAccountPrefixes')[div(4,variables('storageAccountPrefixesCount'))],variables('agentStoragePrivateAccountName'),4)]", 
-        "[concat('Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'))]", 
         "[variables('diagnosticsStorageAccountName')]"
       ], 
       "location": "[resourceGroup().location]", 
@@ -1368,8 +1436,10 @@
                     {
                       "name": "nicipconfig", 
                       "properties": {
-                        "subnet": {
-                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('agentPrivateSubnetName'))]"
+                        "subnet":
+                        {
+                          //"id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', resourceGroup().name, '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('agentPrivateSubnetName'))]"
+                          "id": "[concat('/subscriptions/', subscription().subscriptionId,'/resourceGroups/', variables('masterVNETRG'), '/providers/Microsoft.Network/virtualNetworks/', variables('virtualNetworkName'), '/subnets/', variables('masterSubnetName'))]"
                         }
                       }
                     }
